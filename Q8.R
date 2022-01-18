@@ -19,8 +19,24 @@ txt <- "73167176531330624919225119674426574742355349194934
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450"
 
-txt <- unlist(strsplit(txt, "\n"))
-txt_list <- lapply(1:length(txt), function(i) unlist(strsplit(txt[i], "")))
-txt_df <- do.call(rbind.data.frame, txt_list)
-names(txt_df) <- c(as.character(1:ncol(txt_df)))
+txt <- gsub(txt, pattern = "\n", replacement = "")
+txt <- as.integer(unlist(strsplit(txt, "")))
 
+q8 <- function(n){
+  product <- 1
+  idx <- 1
+  for(i in 1:(length(txt)-n)) {
+    prod <- 1
+    for(j in 0:(n-1)) {
+      prod <- prod * txt[i+j]
+    }
+    if(prod > product) {
+      product <- prod
+      idx <- i
+    }
+  }
+  return(txt[idx:(idx+n-1)])
+}
+
+print(q8(4))
+print(q8(13))
