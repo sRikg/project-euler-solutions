@@ -1,5 +1,4 @@
 num_doubler <- function(str) {
-  ## Works only for str > 10
   digits <- as.integer(unlist(strsplit(str, split="")))
   carry_on <- 0
   sum_str <- c()
