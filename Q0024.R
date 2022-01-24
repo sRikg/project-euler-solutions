@@ -1,27 +1,35 @@
-input <- 0:2
+require('gtools')
 
-swap_array <- function(array, position_1, position_2) {
-  temp <- array[position_1]
-  array[position_1] <- array[position_2]
-  array[position_2] <- temp
-  return(array)
+input <- 0:9
+nth_number <- 1e6
+
+looper_counter <- function(input, nth_number) {
+  input_len <- length(input)
+  next_nth_number <- nth_number %% factorial(input_len - 1)
+  num_to_decrease <- (floor(nth_number / factorial(input_len - 1))+1)
+  output <- input[-num_to_decrease]
+  return(list(output, next_nth_number, input[num_to_decrease]))
 }
 
-one_increment_array <- function(curr_array) {
-  sort_array <- sort(curr_array)
-  max_idx <- which.max(curr_array)
-  temp <- curr_array[max_idx-1] + 1
-  to_swap <- which(curr_array == temp)
-  sort_array[max_idx-1] <- temp
-  sort_array[to_swap] <- sort_array[to_swap]-1
-  return(sort_array)
+input_temp <- input
+nth_number_temp <- nth_number
+saved <- c()
+while(nth_number_temp != 0 & length(input_temp) > 3) {
+  looped <- looper_counter(input_temp, nth_number_temp)
+  saved <- c(saved, looped[[3]])
+  nth_number_temp <- looped[[2]]
+  input_temp <- looped[[1]]
 }
 
-function(input, order_num) {
-  next_array <- input
-  while(order_num > 0){
-    next_arr <- next_array(next_arr, )
-    order_num <- order_num - 1
-  }
-  return(next_arr)
+num_3_input <- input[!input %in% saved]
+num_3_picker <- function(input, num) {
+  return(permutations(n=length(input),r=3,v=input,repeats.allowed=F)[num,])
 }
+
+saved_last <- num_3_picker(num_3_input, looped[[2]])
+
+final <- c(saved, saved_last)
+final <- as.character(final)
+final <- paste0(final, collapse="")
+
+print(final)
