@@ -1,5 +1,4 @@
 # lcm from https://www.datamentor.io/r-programming/examples/least-common-multiple/
-
 lcm <- function(x, y) {
       # choose the greater number
       if(x > y) {
